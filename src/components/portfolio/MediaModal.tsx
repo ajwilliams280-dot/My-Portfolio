@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Image as ImageIcon, Music, ZoomIn, ZoomOut, RotateCcw, ShoppingCart } from "lucide-react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from "next/image";
-import OrangeMoneyCheckout from "./OrangeMoneyCheckout";
+import MonimeCheckout from "./MonimeCheckout";
 
 type MediaType = "video" | "photo" | "music";
 
@@ -407,9 +407,9 @@ export default function MediaModal({
             </div>
           )}
 
-          {/* Orange Money Checkout Overlay */}
+          {/* Monime Checkout Overlay */}
           {isCheckoutOpen && (
-            <OrangeMoneyCheckout 
+            <MonimeCheckout 
               post={{ title, thumbnailUrl, mediaUrl }} 
               onClose={() => setIsCheckoutOpen(false)} 
             />

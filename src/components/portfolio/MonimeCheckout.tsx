@@ -60,6 +60,9 @@ export default function OrangeMoneyCheckout({
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState<any>(null);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -131,15 +134,46 @@ export default function OrangeMoneyCheckout({
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone.trim() || !email.trim() || !legalName.trim() || !stageName.trim() || !selectedLicense) return;
 
-    // Generate random 6-digit order code
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    setOrderCode(code);
-    setTimeLeft(600); // Reset timer to 10 mins
-    setStep("dialer");
+    setIsProcessingPayment(true);
+    setPaymentError("");
+
+    try {
+      const res = await fetch('/api/checkout/monime', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone,
+          email,
+          name: legalName,
+          stageName,
+          amount: selectedLicense.price,
+          description: `Beat License: ${post.title} (${selectedLicense.format})`
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to process payment");
+      }
+
+      setPaymentDetails(data.payment);
+      
+      // Fallback order code if no code returned
+      const code = data.payment?.code || data.payment?.id || Math.floor(100000 + Math.random() * 900000).toString();
+      setOrderCode(code);
+      
+      setTimeLeft(600); // 10 mins
+      setStep("dialer");
+    } catch (err: any) {
+      setPaymentError(err.message || "An error occurred during checkout");
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   const copyCode = () => {
@@ -174,7 +208,7 @@ export default function OrangeMoneyCheckout({
           <button onClick={handleBack} className="absolute left-4 top-1/2 -translate-y-1/2 hover:scale-110 transition-transform">
             <ArrowLeft size={24} />
           </button>
-          <h2 className="text-2xl font-bold tracking-wider">MoniMe / Orange Money</h2>
+          <h2 className="text-2xl font-bold tracking-wider">MoniMe Secure Checkout</h2>
           <p className="text-white/80 text-sm mt-1">
             {step === "licenses" ? "Select a License" : 
              step === "form" ? "Enter Details" : 
@@ -316,11 +350,17 @@ export default function OrangeMoneyCheckout({
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#ff6600] focus:ring-2 focus:ring-[#ff6600]/20 outline-none transition-all"
                     />
                   </div>
+                  {paymentError && (
+                    <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm mb-4 border border-red-200">
+                      {paymentError}
+                    </div>
+                  )}
                   <button 
                     type="submit"
-                    className="w-full bg-[#000] text-white font-bold py-4 rounded-xl mt-4 hover:bg-gray-900 transition-colors shadow-lg active:scale-[0.98]"
+                    disabled={isProcessingPayment}
+                    className="w-full bg-[#000] text-white font-bold py-4 rounded-xl mt-4 hover:bg-gray-900 transition-colors shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70"
                   >
-                    Generate Payment Code
+                    {isProcessingPayment ? <><Loader2 className="animate-spin" size={20} /> Processing...</> : "Pay with MoniMe"}
                   </button>
                 </form>
               </motion.div>
@@ -350,17 +390,10 @@ export default function OrangeMoneyCheckout({
 
                 <div className="bg-gray-50 rounded-xl p-5 w-full mb-6 text-left border border-gray-200">
                   <p className="text-sm text-gray-700 mb-4">
-                    1. Tap the button below to open your phone dialer with <strong>#144#</strong>.<br/>
-                    2. Follow the prompts to send <strong>{selectedLicense.price}</strong> to <strong>{merchantNumber}</strong>.<br/>
-                    3. If asked for a reference, enter your code: <strong>{orderCode}</strong>.
+                    1. A MoniMe payment request has been initiated for <strong>{selectedLicense.price}</strong>.<br/><br/>
+                    2. Check your phone (<strong>{phone}</strong>) for a push prompt to enter your PIN.<br/><br/>
+                    3. If you didn't get a prompt, follow your mobile money provider's instructions to authorize a pending payment using code <strong>{orderCode}</strong>.
                   </p>
-                  
-                  <a 
-                    href="tel:%23144%23"
-                    className="w-full bg-[#ff6600] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-[#e65c00] transition-colors shadow-[0_0_20px_rgba(255,102,0,0.4)] active:scale-[0.98]"
-                  >
-                    <Phone size={20} /> Tap to Dial #144#
-                  </a>
                 </div>
 
                 <button 
