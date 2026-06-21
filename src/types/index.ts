@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  category: 'video' | 'photo' | 'music';
+  category: 'video' | 'photo' | 'music' | 'software';
   subcategory?: string;
   mediaUrl: string;
   thumbnailUrl?: string;
