@@ -172,6 +172,7 @@ export default function OrangeMoneyCheckout({
           legalName,
           stageName,
           title: post.title,
+          audioUrl: post.audioUrl || post.url || "", // Pass the beat audio link
           licenseName: selectedLicense.name,
           licenseFormat: selectedLicense.format,
           features: selectedLicense.features,

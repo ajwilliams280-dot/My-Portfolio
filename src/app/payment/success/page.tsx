@@ -9,6 +9,7 @@ import { jsPDF } from "jspdf";
 export default function PaymentSuccessPage() {
   const [status, setStatus] = useState<"loading" | "generating" | "done" | "error">("loading");
   const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [pdfBlobUrl, setPdfBlobUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const handleFulfillment = async () => {
@@ -58,20 +59,29 @@ export default function PaymentSuccessPage() {
         
         const pdfBase64 = doc.output('datauristring');
         
-        // Send email via API
-        const res = await fetch('/api/send-license', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: order.email,
-            buyerName: order.stageName || order.legalName,
-            beatTitle: order.title,
-            pdfBase64,
-          })
-        });
+        // Also generate a blob URL for immediate download
+        const blob = doc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        setPdfBlobUrl(blobUrl);
         
-        if (!res.ok) {
-          console.error("Failed to send email API");
+        // Attempt to send email via API (may fail if SMTP not configured, but we still give download buttons)
+        try {
+          const res = await fetch('/api/send-license', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: order.email,
+              buyerName: order.stageName || order.legalName,
+              beatTitle: order.title,
+              pdfBase64,
+            })
+          });
+          
+          if (!res.ok) {
+            console.warn("Failed to send email API (SMTP likely not configured)");
+          }
+        } catch (emailErr) {
+          console.warn("Email API unreachable", emailErr);
         }
 
         // Clear local storage so we don't send it again on refresh
@@ -112,8 +122,32 @@ export default function PaymentSuccessPage() {
             </div>
             <h2 className="text-3xl font-black mb-2 uppercase tracking-tight">Payment Successful!</h2>
             <p className="text-foreground/70 mb-8">
-              Thank you for your purchase. We have sent the high-quality <strong>{orderDetails.licenseFormat}</strong> files and your license to <strong>{orderDetails.email}</strong>.
+              Thank you for your purchase. You can download your high-quality files and license agreement below. We've also attempted to email them to <strong>{orderDetails.email}</strong>.
             </p>
+            
+            <div className="flex flex-col gap-3 w-full mb-8">
+              {orderDetails.audioUrl && (
+                <a 
+                  href={orderDetails.audioUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  download={`${orderDetails.title.replace(/\s+/g, '_')}_Audio`}
+                  className="w-full bg-[#ff6600] text-white font-bold py-4 rounded-xl hover:bg-[#e65c00] active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={20} /> Download Beat File
+                </a>
+              )}
+              
+              {pdfBlobUrl && (
+                <a 
+                  href={pdfBlobUrl}
+                  download={`${orderDetails.title.replace(/\s+/g, '_')}_License.pdf`}
+                  className="w-full bg-background border-2 border-foreground text-foreground font-bold py-4 rounded-xl hover:bg-foreground hover:text-background active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={20} /> Download License Agreement (PDF)
+                </a>
+              )}
+            </div>
             
             <div className="bg-background border border-border rounded-xl p-4 w-full text-left mb-8">
               <p className="text-sm text-foreground/60 mb-1">Order Details</p>

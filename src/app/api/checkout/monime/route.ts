@@ -15,8 +15,9 @@ export async function POST(req: Request) {
 
     const origin = req.headers.get("origin") || "https://altons-portfolio-site.vercel.app";
 
-    // Amount comes in as a string like "600 SLE", we need to parse it to a number
-    const numericAmount = parseFloat(amount.replace(/[^0-9.]/g, ''));
+    // Amount comes in as a string like "600 SLE", we need to parse it to a number.
+    // Monime expects the value in the smallest currency unit (cents), so we multiply by 100.
+    const numericAmount = parseFloat(amount.replace(/[^0-9.]/g, '')) * 100;
 
     // Prepare Monime Checkout Session Request
     const monimePayload = {
