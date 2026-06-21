@@ -121,8 +121,8 @@ export default function PaymentSuccessPage() {
               <p className="text-sm mt-2 font-mono text-foreground/50">Code: {orderDetails.orderCode}</p>
             </div>
 
-            <Link href="/work/music" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
-              <ArrowLeft size={20} /> Back to Music
+            <Link href="/work" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+              <ArrowLeft size={20} /> Back to Work
             </Link>
           </div>
         )}
@@ -133,8 +133,8 @@ export default function PaymentSuccessPage() {
             <p className="text-foreground/70 mb-8">
               We couldn't verify your pending order. If you have been charged but haven't received your beat, please contact support.
             </p>
-            <Link href="/work/music" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all">
-              Return to Music
+            <Link href="/work" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all">
+              Return to Work
             </Link>
           </div>
         )}

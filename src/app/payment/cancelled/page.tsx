@@ -23,7 +23,7 @@ export default function PaymentCancelledPage() {
             Your payment process was cancelled or didn't complete successfully. No charges were made.
           </p>
           
-          <Link href="/work/music" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+          <Link href="/work" className="w-full bg-foreground text-background font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
             <ArrowLeft size={20} /> Back to Music
           </Link>
         </div>
