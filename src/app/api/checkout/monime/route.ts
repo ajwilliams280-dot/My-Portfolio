@@ -5,8 +5,9 @@ export async function POST(req: Request) {
   try {
     const { phone, email, amount, description } = await req.json();
 
-    const SPACE_ID = process.env.MONIME_SPACE_ID;
-    const API_KEY = process.env.MONIME_API_KEY;
+    // Strip any accidental spaces or quotes from Vercel env variables
+    const SPACE_ID = process.env.MONIME_SPACE_ID?.replace(/['"]/g, '').trim();
+    const API_KEY = process.env.MONIME_API_KEY?.replace(/['"]/g, '').trim();
 
     if (!SPACE_ID || !API_KEY) {
       return NextResponse.json({ error: "Monime API credentials are not configured" }, { status: 500 });
