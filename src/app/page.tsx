@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
@@ -8,11 +8,10 @@ import { useEffect, useState } from "react";
 import { getPhotos } from "@/data/supabaseDatabase";
 import FeaturedWork from "@/components/FeaturedWork";
 import { Project } from "@/types";
-import PortalTransition from "@/components/PortalTransition";
+
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [showPortal, setShowPortal] = useState(false);
 
   useEffect(() => {
     async function loadProjects() {
@@ -73,15 +72,15 @@ export default function Home() {
             transition={{ duration: 1, delay: 1 }}
             className="mt-10"
           >
-            <button
-              onClick={() => setShowPortal(true)}
+            <Link
+              href="/work"
               className="group flex items-center justify-center gap-3 px-8 py-4 bg-background border border-border rounded-full hover:bg-card hover:border-accent/50 hover:shadow-[0_0_20px_rgba(229,9,20,0.2)] transition-all duration-300 pointer-events-auto"
             >
               <span className="uppercase tracking-widest text-sm font-semibold text-foreground">
                 Enter the World
               </span>
               <MoveRight className="w-5 h-5 text-foreground group-hover:translate-x-1 group-hover:text-accent transition-all duration-300" />
-            </button>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -106,10 +105,7 @@ export default function Home() {
     
     <FeaturedWork projects={projects} />
     
-    {/* Cinematic Portal Overlay */}
-    <AnimatePresence>
-      {showPortal && <PortalTransition onComplete={() => setShowPortal(false)} targetUrl="/work" />}
-    </AnimatePresence>
+
     </>
   );
 }
