@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #050505;
+    --card: #F5F5F5;
+    --card-foreground: #111111;
+    --muted: #E5E5E5;
+    --muted-foreground: #666666;
+    --border: #DDDDDD;
+    --accent: #E50914; /* Cinematic red */
+    --accent-hover: #ff1e27;
+  }
+
+  .dark {
+    --background: #0A0A0A;
+    --foreground: #FFFFFF;
+    --card: #1A1A1A;
+    --card-foreground: #FFFFFF;
+    --muted: #121212;
+    --muted-foreground: #B0B0B0;
+    --border: #2A2A2A;
+    --accent: #E50914; /* Cinematic red */
+    --accent-hover: #ff1e27;
+  }
+}
+
+
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbar for a sleek look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent); 
+}

@@ -1,0 +1,128 @@
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\dashboard\page.tsx[24m[0m
+[0m   [2m13:36[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m27:38[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m41:9[22m   [31merror[39m    Error: Cannot access variable before it is declared[0m
+[0m[0m
+[0m`fetchPosts` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\dashboard\page.tsx:41:9[0m
+[0m  39 |       else {[0m
+[0m  40 |         setUser(currentUser);[0m
+[0m> 41 |         fetchPosts();[0m
+[0m     |         ^^^^^^^^^^ `fetchPosts` accessed before it is declared[0m
+[0m  42 |         fetchProfile();[0m
+[0m  43 |       }[0m
+[0m  44 |       setLoading(false);[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\dashboard\page.tsx:49:3[0m
+[0m  47 |   }, [router]);[0m
+[0m  48 |[0m
+[0m> 49 |   const fetchPosts = async () => {[0m
+[0m     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 50 |     if (!db) return;[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 51 |     const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 52 |     const querySnapshot = await getDocs(q);[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 53 |     const fetched = querySnapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as any) }));[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 54 |     setPosts(fetched);[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 55 |   };[0m
+[0m     | ^^^^^ `fetchPosts` is declared here[0m
+[0m  56 |[0m
+[0m  57 |   const fetchProfile = async () => {[0m
+[0m  58 |     if (!db) return;  [2mreact-hooks/immutability[22m[0m
+[0m   [2m42:9[22m   [31merror[39m    Error: Cannot access variable before it is declared[0m
+[0m[0m
+[0m`fetchProfile` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\dashboard\page.tsx:42:9[0m
+[0m  40 |         setUser(currentUser);[0m
+[0m  41 |         fetchPosts();[0m
+[0m> 42 |         fetchProfile();[0m
+[0m     |         ^^^^^^^^^^^^ `fetchProfile` accessed before it is declared[0m
+[0m  43 |       }[0m
+[0m  44 |       setLoading(false);[0m
+[0m  45 |     });[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\dashboard\page.tsx:57:3[0m
+[0m  55 |   };[0m
+[0m  56 |[0m
+[0m> 57 |   const fetchProfile = async () => {[0m
+[0m     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 58 |     if (!db) return;[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 59 |     const docRef = doc(db, "settings", "profile");[0m
+[0m     …[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 66 |     }[0m
+[0m     | ^^^^^^^^^^^^^^^^^^^^[0m
+[0m> 67 |   };[0m
+[0m     | ^^^^^ `fetchProfile` is declared here[0m
+[0m  68 |[0m
+[0m  69 |   const handleUpload = async (e: React.FormEvent) => {[0m
+[0m  70 |     e.preventDefault();                                                                                                                                                                                                                                      [2mreact-hooks/immutability[22m[0m
+[0m   [2m53:84[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m82:11[22m  [31merror[39m    'finalSubcategory' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           [2mprefer-const[22m[0m
+[0m  [2m271:15[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               [2m@next/next/no-img-element[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\admin\login\page.tsx[24m[0m
+[0m  [2m23:14[22m  [33mwarning[39m  'err' is defined but never used           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m23:19[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\app\contact\page.tsx[24m[0m
+[0m  [2m13:76[22m  [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\components\portfolio\FeaturedWork.tsx[24m[0m
+[0m   [2m20:15[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m37:29[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m147:41[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\components\portfolio\MediaGrid.tsx[24m[0m
+[0m   [2m21:15[22m  [31merror[39m  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m38:7[22m   [31merror[39m  Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\components\portfolio\MediaGrid.tsx:38:7[0m
+[0m  36 |     // Listen to Firebase standard realtime updates[0m
+[0m  37 |     if (!db) {[0m
+[0m> 38 |       setLoading(false);[0m
+[0m     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  39 |       return;[0m
+[0m  40 |     }[0m
+[0m  41 |     const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));  [2mreact-hooks/set-state-in-effect[22m[0m
+[0m  [2m237:41[22m  [31merror[39m  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\components\portfolio\MediaModal.tsx[24m[0m
+[0m   [2m4:13[22m  [33mwarning[39m  'Play' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m16:10[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m55:62[22m  [31merror[39m    Error: Cannot call impure function during render[0m
+[0m[0m
+[0m`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).[0m
+[0m[0m
+[0mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\components\portfolio\MediaModal.tsx:55:62[0m
+[0m  53 |           {date && ([0m
+[0m  54 |             <div className="absolute top-4 left-4 z-10 bg-black/50 px-3 py-1 rounded-full text-xs uppercase tracking-widest text-white/80 backdrop-blur-md">[0m
+[0m> 55 |               {new Date(date.seconds ? date.seconds * 1000 : Date.now()).toLocaleDateString()}[0m
+[0m     |                                                              ^^^^^^^^^^ Cannot call impure function[0m
+[0m  56 |             </div>[0m
+[0m  57 |           )}[0m
+[0m  58 |  [2mreact-hooks/purity[22m[0m
+[0m[0m
+[0m[4mC:\Users\willi\OneDrive\Desktop\MY PORTFOLIO\src\lib\firebase.ts[24m[0m
+[0m  [2m6:10[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m6:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m6:30[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m6:44[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[31m[1m✖ 23 problems (20 errors, 3 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[31m[1m  1 error and 0 warnings potentially fixable with the `--fix` option.[22m[39m[0m
+[0m[31m[1m[22m[39m[0m
