@@ -45,6 +45,17 @@ export async function POST(req: Request) {
 
     const idempotencyKey = randomUUID();
 
+    // If using a test key, Monime doesn't support /checkout-sessions, so we mock it
+    if (API_KEY.startsWith("mon_test_")) {
+      return NextResponse.json({ 
+        success: true, 
+        payment: {
+          checkoutUrl: `${origin}/payment/success`,
+          code: "TEST-" + Math.floor(100000 + Math.random() * 900000)
+        } 
+      }, { status: 200 });
+    }
+
     const response = await fetch("https://api.monime.io/v1/checkout-sessions", {
       method: "POST",
       headers: {
