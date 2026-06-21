@@ -166,6 +166,19 @@ export default function OrangeMoneyCheckout({
       // If the API returns a hosted checkout URL, redirect the user immediately
       const checkoutUrl = data.payment?.checkout_url || data.payment?.checkoutUrl || data.payment?.url || data.payment?.link;
       if (checkoutUrl) {
+        // Save order details for fulfillment on success page
+        localStorage.setItem("pendingBeatOrder", JSON.stringify({
+          email,
+          legalName,
+          stageName,
+          title: post.title,
+          licenseName: selectedLicense.name,
+          licenseFormat: selectedLicense.format,
+          features: selectedLicense.features,
+          price: selectedLicense.price,
+          orderCode: data.payment?.code || data.payment?.id || Math.floor(100000 + Math.random() * 900000).toString(),
+        }));
+
         window.location.href = checkoutUrl;
         return;
       }

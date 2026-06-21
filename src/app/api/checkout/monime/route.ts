@@ -12,16 +12,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Monime API credentials are not configured" }, { status: 500 });
     }
 
+    const origin = req.headers.get("origin") || "https://altons-portfolio-site.vercel.app";
+
     // Amount comes in as a string like "600 SLE", we need to parse it to a number
     const numericAmount = parseFloat(amount.replace(/[^0-9.]/g, ''));
 
-    // Prepare Monime Payment Request
+    // Prepare Monime Checkout Session Request
     const monimePayload = {
-      name: description || "Payment for beat license",
-      amount: {
-        currency: "SLE",
-        value: numericAmount
-      },
+      name: "Payment for beat license",
+      description: description || "Beat license purchase",
+      successUrl: `${origin}/payment/success`,
+      cancelUrl: `${origin}/payment/cancelled`,
+      lineItems: [
+        {
+          type: "custom",
+          name: description || "Beat License",
+          price: {
+            currency: "SLE",
+            value: numericAmount
+          },
+          quantity: 1
+        }
+      ],
       // Include metadata to track the buyer
       metadata: {
         buyer_email: email,
@@ -31,7 +43,7 @@ export async function POST(req: Request) {
 
     const idempotencyKey = randomUUID();
 
-    const response = await fetch("https://api.monime.io/v1/payments", {
+    const response = await fetch("https://api.monime.io/v1/checkout-sessions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
@@ -44,12 +56,19 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !data.success) {
       console.error("Monime API Error:", data);
-      return NextResponse.json({ error: data.message || "Failed to initiate payment" }, { status: response.status });
+      return NextResponse.json({ error: data.error?.message || data.message || "Failed to initiate payment" }, { status: response.status || 500 });
     }
 
-    return NextResponse.json({ success: true, payment: data }, { status: 200 });
+    // The checkout session response has a redirectUrl which the frontend will use
+    return NextResponse.json({ 
+      success: true, 
+      payment: {
+        checkoutUrl: data.result.redirectUrl,
+        ...data.result
+      } 
+    }, { status: 200 });
 
   } catch (error: any) {
     console.error("Monime Checkout Error:", error);
