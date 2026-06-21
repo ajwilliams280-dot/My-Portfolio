@@ -17,12 +17,12 @@ export async function POST(req: Request) {
 
     // Prepare Monime Payment Request
     const monimePayload = {
+      name: description || "Payment for beat license",
       mode: "one_time",
       amount: {
         currency: "SLE",
         value: numericAmount
       },
-      description: description || "Payment for beat license",
       // Include metadata to track the buyer
       metadata: {
         buyer_email: email,
