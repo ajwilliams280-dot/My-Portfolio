@@ -32,20 +32,19 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-40 bg-background border-b border-border shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-16 h-10 flex items-center justify-center">
+          <div className="relative w-36 h-12 flex items-center justify-start">
             <Image
-              src="/images/new-logo.png"
+              src="/images/logo.png"
               alt="Altonsworld Logo"
-              width={80}
-              height={40}
-              className="object-contain group-hover:scale-110 transition-transform duration-300"
+              width={140}
+              height={48}
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
               onError={(e) => {
-                // Fallback to text if logo fails to load
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-noir font-bold text-lg">AW</div>';
+                  parent.innerHTML = '<span class="text-xl font-bold tracking-widest text-white">Alton\'s World</span>';
                 }
               }}
             />
