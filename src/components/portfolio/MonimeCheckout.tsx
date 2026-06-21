@@ -163,7 +163,14 @@ export default function OrangeMoneyCheckout({
 
       setPaymentDetails(data.payment);
       
-      // Fallback order code if no code returned
+      // If the API returns a hosted checkout URL, redirect the user immediately
+      const checkoutUrl = data.payment?.checkout_url || data.payment?.checkoutUrl || data.payment?.url || data.payment?.link;
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+        return;
+      }
+
+      // Fallback order code if no code returned and no redirect
       const code = data.payment?.code || data.payment?.id || Math.floor(100000 + Math.random() * 900000).toString();
       setOrderCode(code);
       

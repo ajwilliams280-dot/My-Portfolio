@@ -18,7 +18,6 @@ export async function POST(req: Request) {
     // Prepare Monime Payment Request
     const monimePayload = {
       name: description || "Payment for beat license",
-      mode: "one_time",
       amount: {
         currency: "SLE",
         value: numericAmount
@@ -32,7 +31,7 @@ export async function POST(req: Request) {
 
     const idempotencyKey = randomUUID();
 
-    const response = await fetch("https://api.monime.io/v1/payment-codes", {
+    const response = await fetch("https://api.monime.io/v1/payments", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
