@@ -200,7 +200,7 @@ export default function PhotoLightbox({
               {!showCategoryDropdown && (
                 <div className="flex flex-wrap gap-1.5">
                   {selectedCategories.length > 0 ? selectedCategories.map(id => {
-                    const found = [...otherCategories].find(c => c.id === id);
+                    const found = [...(otherCategories || [])].find(c => c.id === id);
                     return found ? (
                       <span key={id} className="px-2.5 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-white/60">
                         {found.icon} {found.label}
@@ -220,7 +220,7 @@ export default function PhotoLightbox({
                   className="overflow-hidden"
                 >
                   <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-                    {otherCategories.map(cat => {
+                    {(otherCategories || []).map(cat => {
                       const isSelected = selectedCategories.includes(cat.id);
                       return (
                         <button

@@ -4218,7 +4218,7 @@ export const localProjects: Project[] = [
     featured: false,
     photoCategories: ["wildlife"],
     autoTags: [],
-  },,
+  },
   {
     id: 'photo-1000',
     title: 'Indoor Portrait',

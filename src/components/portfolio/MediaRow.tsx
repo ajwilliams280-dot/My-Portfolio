@@ -60,7 +60,7 @@ export default function MediaRow({ projects }: MediaRowProps) {
               />
             )}
 
-            {post.category === "videography" && (
+            {post.category === "video" && (
               <div className="relative w-full h-full aspect-[4/3] bg-black rounded-xl overflow-hidden border-2 border-[#111] shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:border-accent/50 transition-colors duration-500">
                 {/* Film strip borders */}
                 <div className="absolute left-0 top-0 bottom-0 w-4 bg-black flex flex-col justify-evenly py-2 z-20">

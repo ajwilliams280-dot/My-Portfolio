@@ -169,7 +169,7 @@ export default function BookingModal({ isOpen, onClose, selectedPackage, service
   const { totalCost, lineItems } = useMemo(() => {
     if (!selectedPackage) return { totalCost: 0, lineItems: [] };
     let total = selectedPackage.basePrice;
-    let items: {name: string, price: number}[] = [];
+    let items: string[] = [];
 
     // Quantities
     currentAddons.quantities.forEach(q => {
