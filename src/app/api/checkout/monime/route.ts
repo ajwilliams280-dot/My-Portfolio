@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     // Hardcoding keys as a fallback because Vercel is retaining an expired key
     const SPACE_ID = "spc-k6S8Rnhfn3LK5PT9SDEVUyXB9Zi";
-    const API_KEY = "mon_wLDMWaLDFTHwRkpvWTTbBCxbP4Qh7yCKvf1it2ZqlN1N0i5NZ8m2jUNOPd32OoJ9";
+    const API_KEY = "mon_test_A0mXGMVJEUUclLOqoXXsh6b7Ez3mp5cGcSjqSGnzykC2ivM3rJARmj8FsRbmS750";
 
     if (!SPACE_ID || !API_KEY) {
       return NextResponse.json({ error: "Monime API credentials are not configured" }, { status: 500 });
