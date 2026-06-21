@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { email, buyerName, beatTitle, pdfBase64 } = await req.json();
+    const { email, buyerName, beatTitle, pdfBase64, audioUrl } = await req.json();
 
     // Check if nodemailer is configured
     if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       from: `"Spice (Alton's World)" <${process.env.SMTP_USER}>`,
       to: email,
       subject: `Your Beat License for "${beatTitle}"`,
-      text: `Hello ${buyerName},\n\nThank you for purchasing the beat "${beatTitle}". Attached is your official License Agreement.\n\nBest regards,\nSpice (Alton's World)`,
+      text: `Hello ${buyerName},\n\nThank you for purchasing the beat "${beatTitle}".\n\nYou can download your high-quality beat file here:\n${audioUrl || "Link unavailable. Please download directly from the success page."}\n\nAttached is your official License Agreement.\n\nBest regards,\nSpice (Alton's World)`,
       attachments: [
         {
           filename: `${beatTitle.replace(/\s+/g, '_')}_License.pdf`,

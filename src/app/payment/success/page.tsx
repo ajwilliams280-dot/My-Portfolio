@@ -73,6 +73,7 @@ export default function PaymentSuccessPage() {
               email: order.email,
               buyerName: order.stageName || order.legalName,
               beatTitle: order.title,
+              audioUrl: order.audioUrl,
               pdfBase64,
             })
           });
