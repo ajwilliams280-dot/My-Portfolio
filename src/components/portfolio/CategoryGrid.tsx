@@ -8,14 +8,14 @@ interface Category {
   id: string;
   label: string;
   description: string;
-  icon: string;
+  icon?: string;
   image?: string;
   count?: number;
 }
 
 interface CategoryGridProps {
   categories: Category[];
-  mediaType: "photo" | "video" | "music";
+  mediaType: "photo" | "video" | "music" | "software";
 }
 
 export default function CategoryGrid({ categories, mediaType }: CategoryGridProps) {
