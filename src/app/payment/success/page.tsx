@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle2, Loader2, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Loader2, ArrowLeft, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { jsPDF } from "jspdf";
