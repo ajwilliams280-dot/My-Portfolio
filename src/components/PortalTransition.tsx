@@ -169,7 +169,7 @@ export default function PortalTransition({ onComplete, targetUrl = "/work" }: Po
       } else {
         // Complete
         cancelAnimationFrame(animationFrameId);
-        router.push(targetUrl);
+        window.location.href = targetUrl;
         setTimeout(() => {
           onComplete();
         }, 500); // Give router time to mount new page
@@ -296,7 +296,7 @@ export default function PortalTransition({ onComplete, targetUrl = "/work" }: Po
       {/* Skip Button */}
       <button 
         onClick={() => {
-          router.push(targetUrl);
+          window.location.href = targetUrl;
           onComplete();
         }}
         className="absolute bottom-8 right-8 z-20 px-6 py-2 border border-white/20 rounded-full text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300"
