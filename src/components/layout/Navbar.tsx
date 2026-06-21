@@ -34,7 +34,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-36 h-12 flex items-center justify-start">
             <Image
-              src="/images/logo.png"
+              src="/images/altonsworld-logo.png"
               alt="Altonsworld Logo"
               width={140}
               height={48}
