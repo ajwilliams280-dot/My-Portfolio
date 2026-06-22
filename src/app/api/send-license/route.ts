@@ -27,6 +27,8 @@ export async function POST(req: Request) {
     const mailOptions = {
       from: `"Spice (Alton's World)" <${process.env.SMTP_USER}>`,
       to: email,
+      bcc: process.env.SMTP_USER, // Send a hidden copy to the admin as a receipt
+      replyTo: process.env.SMTP_USER,
       subject: `Your Beat License for "${beatTitle}"`,
       text: `Hello ${buyerName},\n\nThank you for purchasing the beat "${beatTitle}".\n\nYou can download your high-quality beat file here:\n${audioUrl || "Link unavailable. Please download directly from the success page."}\n\nAttached is your official License Agreement.\n\nBest regards,\nSpice (Alton's World)`,
       attachments: [
